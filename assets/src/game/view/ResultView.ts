@@ -51,31 +51,39 @@ export default class ResultView extends POP_UI_BASE {
     }
 
     private closeGameRevive() {
-        this.updateCanRevive(false);
+        // this.updateCanRevive(false);
+        // console.log('1');
     }
 
     private gameRevive() {
         EventDispatch.ins().fire(Event_Name.GAME_RELIVE);
         this.onCloseBtnTouch();
+        console.log('2');
     }
 
     private _autoReviveCount = 10;
     private updateCanRevive(canRevive: boolean) {
-        this.node_revive.active = canRevive;
-        this.node_no_revive.active = !canRevive;
-        if (canRevive) {
-            this._autoReviveCount = 10;
-            this.autoReviveCountFn();
-            this.schedule(this.autoReviveCountFn, 1, this._autoReviveCount + 1, 0);
-        } else {
-            this.unschedule(this.autoReviveCountFn);
-        }
+        // this.node_revive.active = canRevive;
+
+        // this.node_no_revive.active = !canRevive;
+        // console.log('3');
+        // if (canRevive) {
+        //     console.log('4');
+        //     this._autoReviveCount = 10;
+        //     this.autoReviveCountFn();
+        //     this.schedule(this.autoReviveCountFn, 1, this._autoReviveCount + 1, 0);
+        // } else {
+        //     console.log('5');
+        //     this.unschedule(this.autoReviveCountFn);
+        // }
     }
 
     private autoReviveCountFn() {
         this._autoReviveCount--;
         this.lb_revive_count.string = `${this._autoReviveCount}`;
+        console.log('7' + this._autoReviveCount);
         if (this._autoReviveCount <= 0) {
+            console.log('6');
             this.closeGameRevive();
         }
     }
@@ -91,11 +99,11 @@ export default class ResultView extends POP_UI_BASE {
         this.lb_score.string = `${score}`;
         AudioPlayer.ins().play_sound(this._sound[Math.floor(Math.random() * this._sound.length)] || this._sound[0]);
 
-        if (GameModel.ins().revive_times < 1) {
-            this.updateCanRevive(true);
-        } else {
-            this.updateCanRevive(false);
-        }
+        // if (GameModel.ins().revive_times < 1) {
+        //     this.updateCanRevive(true);
+        // } else {
+        //     this.updateCanRevive(false);
+        // }
     }
 
     on_hide() {
