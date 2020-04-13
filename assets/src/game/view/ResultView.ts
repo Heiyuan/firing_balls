@@ -28,6 +28,8 @@ export default class ResultView extends POP_UI_BASE {
     btn_share: cc.Node = null;
     @property(cc.Label)
     lb_score: cc.Label = null;
+    @property(cc.Label)
+    hi_score: cc.Label = null;
 
     private _sound: string[] = [AUDIO_CONFIG.Audio_gameover, AUDIO_CONFIG.Audio_win, AUDIO_CONFIG.Audio_congra]
 
@@ -96,6 +98,12 @@ export default class ResultView extends POP_UI_BASE {
             GameModel.ins().bestScore = score;
         }
 
+        var heigscore =  cc.sys.localStorage.getItem("heigscore");
+        if (!heigscore || heigscore < score) {
+            heigscore = score;
+            cc.sys.localStorage.setItem("heigscore", score);
+        }
+        this.hi_score.string = `${heigscore}`;
         this.lb_score.string = `${score}`;
         AudioPlayer.ins().play_sound(this._sound[Math.floor(Math.random() * this._sound.length)] || this._sound[0]);
 
